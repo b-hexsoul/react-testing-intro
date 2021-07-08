@@ -32,3 +32,54 @@ test('The add button renders with +', () => {
   const addButton = component.getByTestId('add-button');
   expect(addButton.textContent).toBe('+');
 });
+
+test('Change value of input works', () => {
+  const { getByTestId } = render(<Counter />);
+  const inputEl = getByTestId('input');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '5',
+    },
+  });
+
+  expect(inputEl.value).toBe('5');
+});
+
+test('Click minus button decreases count', () => {
+  const { getByTestId } = render(<Counter />);
+  const count = getByTestId('counter');
+  const minusButton = getByTestId('minus-button');
+
+  expect(count.textContent).toBe('0');
+  fireEvent.click(minusButton);
+  expect(count.textContent).toBe('-1');
+});
+
+test('Click add button increases count', () => {
+  const { getByTestId } = render(<Counter />);
+  const count = getByTestId('counter');
+  const addButton = getByTestId('add-button');
+
+  expect(count.textContent).toBe('0');
+  fireEvent.click(addButton);
+  expect(count.textContent).toBe('1');
+});
+
+test('Change input value and click add button increases count', () => {
+  const { getByTestId } = render(<Counter />);
+  const count = getByTestId('counter');
+  const addButton = getByTestId('add-button');
+  const inputEl = getByTestId('input');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '5',
+    },
+  });
+  expect(inputEl.value).toBe('5');
+
+  expect(count.textContent).toBe('0');
+  fireEvent.click(addButton);
+  expect(count.textContent).toBe('5');
+});
