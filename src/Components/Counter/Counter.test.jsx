@@ -83,3 +83,51 @@ test('Change input value and click add button increases count', () => {
   fireEvent.click(addButton);
   expect(count.textContent).toBe('5');
 });
+
+test('Change input value and click minus button increases count', () => {
+  const { getByTestId } = render(<Counter />);
+  const count = getByTestId('counter');
+  const minusButton = getByTestId('minus-button');
+  const inputEl = getByTestId('input');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '5',
+    },
+  });
+  expect(inputEl.value).toBe('5');
+
+  expect(count.textContent).toBe('0');
+  fireEvent.click(minusButton);
+  expect(count.textContent).toBe('-5');
+});
+
+test('Counter style changes with button clicks', () => {
+  const { getByTestId } = render(<Counter />);
+  const count = getByTestId('counter');
+  const inputEl = getByTestId('input');
+  const addButton = getByTestId('add-button');
+  const minusButton = getByTestId('minus-button');
+
+  expect(count.className).toBe('');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '50',
+    },
+  });
+  expect(inputEl.value).toBe('50');
+  fireEvent.click(addButton);
+  expect(count.className).toBe('');
+  fireEvent.click(addButton);
+  expect(count.className).toBe('green');
+  fireEvent.click(addButton);
+  expect(count.className).toBe('green');
+
+  fireEvent.click(minusButton);
+  fireEvent.click(minusButton);
+  fireEvent.click(minusButton);
+  fireEvent.click(minusButton);
+  fireEvent.click(minusButton);
+  expect(count.className).toBe('red');
+});
