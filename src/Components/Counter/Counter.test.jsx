@@ -3,38 +3,39 @@ import Counter from './Counter';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-test('The header should renders with correct text', () => {
+let getByTestId;
+
+beforeEach(() => {
   const component = render(<Counter />);
-  const headerEl = component.getByTestId('header');
+  getByTestId = component.getByTestId;
+});
+
+test('The header should renders with correct text', () => {
+  const headerEl = getByTestId('header');
   expect(headerEl.textContent).toBe('Counter');
 });
 
 test('counter initially start with text of 0', () => {
-  const component = render(<Counter />);
-  const countEl = component.getByTestId('counter');
+  const countEl = getByTestId('counter');
   expect(countEl.textContent).toBe('0');
 });
 
 test('The input has initial value of 1', () => {
-  const component = render(<Counter />);
-  const inputEl = component.getByTestId('input');
+  const inputEl = getByTestId('input');
   expect(inputEl.value).toBe('1');
 });
 
 test('The minus button renders with -', () => {
-  const component = render(<Counter />);
-  const minusButton = component.getByTestId('minus-button');
+  const minusButton = getByTestId('minus-button');
   expect(minusButton.textContent).toBe('-');
 });
 
 test('The add button renders with +', () => {
-  const component = render(<Counter />);
-  const addButton = component.getByTestId('add-button');
+  const addButton = getByTestId('add-button');
   expect(addButton.textContent).toBe('+');
 });
 
 test('Change value of input works', () => {
-  const { getByTestId } = render(<Counter />);
   const inputEl = getByTestId('input');
 
   fireEvent.change(inputEl, {
@@ -47,7 +48,6 @@ test('Change value of input works', () => {
 });
 
 test('Click minus button decreases count', () => {
-  const { getByTestId } = render(<Counter />);
   const count = getByTestId('counter');
   const minusButton = getByTestId('minus-button');
 
@@ -57,7 +57,6 @@ test('Click minus button decreases count', () => {
 });
 
 test('Click add button increases count', () => {
-  const { getByTestId } = render(<Counter />);
   const count = getByTestId('counter');
   const addButton = getByTestId('add-button');
 
@@ -67,7 +66,6 @@ test('Click add button increases count', () => {
 });
 
 test('Change input value and click add button increases count', () => {
-  const { getByTestId } = render(<Counter />);
   const count = getByTestId('counter');
   const addButton = getByTestId('add-button');
   const inputEl = getByTestId('input');
@@ -85,7 +83,6 @@ test('Change input value and click add button increases count', () => {
 });
 
 test('Change input value and click minus button increases count', () => {
-  const { getByTestId } = render(<Counter />);
   const count = getByTestId('counter');
   const minusButton = getByTestId('minus-button');
   const inputEl = getByTestId('input');
@@ -103,7 +100,6 @@ test('Change input value and click minus button increases count', () => {
 });
 
 test('Counter style changes with button clicks', () => {
-  const { getByTestId } = render(<Counter />);
   const count = getByTestId('counter');
   const inputEl = getByTestId('input');
   const addButton = getByTestId('add-button');
