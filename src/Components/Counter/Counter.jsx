@@ -5,11 +5,7 @@ export default function Counter() {
 
   return (
     <div>
-      <h1>Counter</h1>
-      <p>{count}</p>
-      <button>+</button>
-      <input type="text" />
-      <button>-</button>
+      <h1 data-testid={'header'}>Counter</h1>
     </div>
   );
 }
